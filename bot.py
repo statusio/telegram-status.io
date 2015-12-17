@@ -62,7 +62,7 @@ def resolve_incident(incident_id, incident_details):
 
 def send_statusio(action, data_json):
     headers = {'Content-Type':'application/json', 'x-api-id':config.get("statusio_auth", "id", raw=True), 'x-api-key':config.get("statusio_auth", "key", raw=True)}
-    response = requests.post('https://api.status.io/v2/incident/%s' % (action, ), data = data_json, headers = headers)
+    response = requests.post('https://api.status.io/v2/incident/%s' % (action, ), data = json.dumps(data_json), headers = headers)
     return response.content
 
 @app.route('/bot/webhook', methods=['GET', 'POST'])
@@ -70,6 +70,7 @@ def webhook():
     if request.method == "POST":
         incoming = request.get_data()
         logging.info(str(incoming))
+        reply = 'BAD DATA'
         try:
             chat_id = ast.literal_eval(incoming)['message']['chat']['id']
             msg = ast.literal_eval(incoming)['message']['text'].strip().lower().split()
