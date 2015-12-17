@@ -95,6 +95,9 @@ def webhook():
             print e
 
         requests.post('https://api.telegram.org/bot%s/sendMessage?chat_id=%s' % (api_key,str(chat_id)), data={'text':reply}) 
+        return '{"status":"ok"}'
+    if request.method == "GET":
+        return '{"status":"ok"}'
 
 if __name__ == '__main__':
     app.run(port=5001)
