@@ -63,7 +63,7 @@ def resolve_incident(incident_id, incident_details):
 def send_statusio(action, data_json):
     headers = {'Content-Type':'application/json', 'x-api-id':config.get("statusio_auth", "id", raw=True), 'x-api-key':config.get("statusio_auth", "key", raw=True)}
     response = requests.post('https://api.status.io/v2/incident/%s' % (action, ), data = json.dumps(data_json), headers = headers)
-    return response.content
+    return json.loads(response.content)['result']
 
 @app.route('/bot/webhook', methods=['GET', 'POST'])
 def webhook():
