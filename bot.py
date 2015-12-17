@@ -6,13 +6,13 @@ app = Flask(__name__)
 app.debug = True
 logging.basicConfig(filename='msg.log',level=logging.DEBUG, format='%(asctime)s %(message)s')
 
-check = os.path.isfile(os.path.expanduser('~/tmp/statusio.cfg'))
+check = os.path.isfile(os.path.expanduser('~/.statusio.cfg'))
 if cmp(check,False) == 0:
   print "~/.statusio.cfg is missing"
   sys.exit(2)
 
 config = ConfigParser.ConfigParser()
-config.read(os.path.expanduser('~/tmp/statusio.cfg'))
+config.read(os.path.expanduser('~/.statusio.cfg'))
 api_key = config.get("telegram", "key", raw=True)
 statuspage_id = config.get("statusio_auth", "page", raw=True)
 
